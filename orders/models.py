@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class OrderModel(models.Model):
+class Order(models.Model):
     status = models.CharField(
         max_length=120,
         choices=[
@@ -11,4 +11,4 @@ class OrderModel(models.Model):
         ],
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    carts = models.ManyToManyField("Carts.cart", related_name="orders")
+    carts = models.ManyToManyField("carts.Cart", related_name="orders")

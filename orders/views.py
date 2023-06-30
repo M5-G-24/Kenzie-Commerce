@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import OrderModel
+from .models import Order
 from .serializer import OrderSerializer
 from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -10,7 +10,7 @@ class OrderListCreateView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
-    queryset = OrderModel.objects.all()
+    queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
 
@@ -18,5 +18,5 @@ class OrderCreateUpdateDestroyDetailsView(generics.RetrieveUpdateDestroyAPIView)
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdminUser]
 
-    queryset = OrderModel.objects.all()
+    queryset = Order.objects.all()
     serializer_class = OrderSerializer
