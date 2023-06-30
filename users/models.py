@@ -8,11 +8,11 @@ class User(AbstractUser):
     is_active = models.BooleanField(default=False)
     email = models.EmailField(blank=False)
     role = models.CharField(
-        max_length=10,
+        max_length=15,
         choices=[
-            ("ADMIN", "Administrator"),
-            ("SELLER", "Seller"),
-            ("CUSTOMER", "Customer"),
+            ("Administrator", "ADMIN"),
+            ("Seller", "SELLER"),
+            ("Customer", "CUSTOMER"),
         ],
     )
     created_at = models.DateTimeField(auto_now_add=True)
