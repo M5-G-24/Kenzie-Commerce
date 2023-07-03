@@ -5,4 +5,4 @@ from .models import Order
 class OrderSerializer(serializers.ModelField):
     class Meta:
         model = Order
-        fields = ["id", "status", "created_at", "carts"]
+        fields = ["id", "status", "created_at", "cart_product", "users"]
