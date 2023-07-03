@@ -7,7 +7,7 @@ from .models import Product
 from .serializers import ProductSerializer
 
 
-class ProductListAPIView(generics.ListCreateAPIView):
+class ProductListView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
@@ -26,8 +26,8 @@ class ProductListAPIView(generics.ListCreateAPIView):
 
         return queryset
 
-    def perform_create(self, serializer):
-        serializer.save()
+    # def perform_create(self, serializer):
+    #     serializer.save()
 
 
 class ProductDetailView(APIView):
