@@ -1,4 +1,5 @@
 from django.db import models
+from carts.models import Cart
 
 
 class Order(models.Model):
@@ -11,4 +12,4 @@ class Order(models.Model):
         ],
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    carts = models.ManyToManyField("carts.Cart", related_name="orders")
+    carts = models.ManyToManyField(Cart, related_name="orders")
