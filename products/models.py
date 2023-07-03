@@ -10,9 +10,10 @@ class Product(models.Model):
     price = models.FloatField()
     stock = models.IntegerField()
     disponibility = models.CharField(
-        max_length=11,
+        max_length=120,
         choices=[
-            ("AVALIABLE", "Avaliable"),
-            ("UNAVALIABLE", "Unavaliable"),
+            ("AVAILABLE", "Available"),
+            ("UNAVAILABLE", "Unavailable"),
         ],
     )
+    user = models.ForeignKey("users.User", models.CASCADE, related_name="user_products")
