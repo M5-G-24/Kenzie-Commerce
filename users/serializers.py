@@ -10,10 +10,9 @@ class UserSerializer(serializers.ModelSerializer):
             "id",
             "is_active",
             "email",
-            "role",
             "password",
             "username",
-            "is_staff"
+            "is_staff",
         ]
         extra_kwargs = {
             "username": {
@@ -28,11 +27,8 @@ class UserSerializer(serializers.ModelSerializer):
             "email": {"validators": [UniqueValidator(queryset=User.objects.all())]},
         }
 
-    def create(self, validated_data: dict) -> User:     
-        if validated_data.get('role') == "Administrator":
-            return User.objects.create_superuser(**validated_data)  
+    def create(self, validated_data: dict) -> User:
+        if validated_data.get("role") == "Administrator":
+            return User.objects.create_superuser(**validated_data)
         else:
             return User.objects.create_user(**validated_data)
-       
-        
-      
