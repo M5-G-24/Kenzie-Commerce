@@ -11,11 +11,6 @@ class Order(models.Model):
         ],
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    cart_product = models.OneToOneField(
-        "cart_products.CartProduct",
-        on_delete=models.CASCADE,
-        related_name="cart_product_order",
-    )
     user = models.ForeignKey(
         "users.User",
         on_delete=models.CASCADE,
