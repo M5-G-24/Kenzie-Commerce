@@ -9,5 +9,4 @@ class Product(models.Model):
     category = models.CharField(max_length=255)
     price = models.FloatField()
     stock = models.IntegerField()
-    availability = models.BooleanField(default=True)
     user = models.ForeignKey("users.User", models.CASCADE, related_name="user_products")
