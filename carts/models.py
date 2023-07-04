@@ -6,5 +6,5 @@ class Cart(models.Model):
         ordering = ["id"]
 
     user = models.OneToOneField(
-        "users.User", on_delete=models.CASCADE, related_name="cart"
+        "users.User", on_delete=models.CASCADE, related_name="user_cart"
     )
