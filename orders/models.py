@@ -1,5 +1,4 @@
 from django.db import models
-from carts.models import Cart
 
 
 class Order(models.Model):
@@ -12,4 +11,13 @@ class Order(models.Model):
         ],
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    carts = models.ManyToManyField(Cart, related_name="orders")
+    cart_product = models.OneToOneField(
+        "cart_products.CartProduct",
+        on_delete=models.CASCADE,
+        related_name="cart_product_order",
+    )
+    user = models.ForeignKey(
+        "users.User",
+        on_delete=models.CASCADE,
+        related_name="user_orders",
+    )
