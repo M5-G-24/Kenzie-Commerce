@@ -2,6 +2,7 @@ from rest_framework import generics
 from .models import CartProduct
 from .serializers import CartProductSerializer, CartProductUpdateSerializer
 from carts.models import Cart
+from products.models import Product
 
 class CartProductView(generics.ListCreateAPIView):
     serializer_class = CartProductSerializer
@@ -13,7 +14,11 @@ class CartProductView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         cart_id = self.kwargs['cart_id']
         cart = Cart.objects.get(id=cart_id)
-        serializer.save(cart=cart)
+
+        product_id = self.request.data.get('product')
+        product = Product.objects.get(id=product_id)
+
+        serializer.save(cart=cart, product=product)
 
 
 class CartProductDetailView(generics.RetrieveUpdateDestroyAPIView):
