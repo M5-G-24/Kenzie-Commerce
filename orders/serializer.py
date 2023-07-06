@@ -6,7 +6,7 @@ from cart_products.models import CartProduct
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ["id", "status", "created_at", "cart_product", "users"]
+        fields = ["id", "product", "user" "created_at", "amount", "total", "status"]
 
     def create(self, validated_data, cart_product_id) -> Order:
         cart_product = CartProduct.objects.get(cart_product_id)

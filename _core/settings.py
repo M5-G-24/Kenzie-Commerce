@@ -43,7 +43,6 @@ THIRD_PARTY_APPS = ["rest_framework"]
 
 MY_APPS = [
     "addresses",
-    "carts",
     "orders",
     "products",
     "users",
