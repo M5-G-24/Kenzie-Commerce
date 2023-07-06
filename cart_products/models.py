@@ -1,4 +1,6 @@
 from django.db import models
+from products.models import Product
+from math import ceil
 
 
 class CartProduct(models.Model):

@@ -3,8 +3,11 @@ from .models import CartProduct
 
 
 class CartProductSerializer(serializers.ModelSerializer):
+    total = serializers.SerializerMethodField()
+
     class Meta:
         model = CartProduct
+
         fields = ["id", "user", "product", "amount"]
         extra_kwargs = {"user": {"read_only": True}, "total": {"read_only": True}}
 
@@ -12,12 +15,19 @@ class CartProductSerializer(serializers.ModelSerializer):
         return CartProduct.objects.create(**validated_data)
 
 
+
 class CartProductUpdateSerializer(serializers.ModelSerializer):
+    total = serializers.SerializerMethodField()
+
     class Meta:
         model = CartProduct
+
         fields = ["id", "user", "product", "amount"]
         extra_kwargs = {
             "id": {"read_only": True},
             "user": {"read_only": True},
             "product": {"read_only": True},
         }
+
+    def get_total(self, obj):
+        return obj.total
