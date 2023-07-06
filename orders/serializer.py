@@ -3,7 +3,7 @@ from .models import Order
 from cart_products.models import CartProduct
 
 
-class OrderSerializer(serializers.ModelField):
+class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ["id", "status", "created_at", "cart_product", "users"]
