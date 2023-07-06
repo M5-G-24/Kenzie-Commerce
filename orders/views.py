@@ -17,11 +17,11 @@ class OrderListCreateView(generics.ListCreateAPIView):
 
     def post(self, request, user_id):
         cart_products = CartProduct.objects.filter(user_id=user_id)
+        print("cart_products: ", cart_products)
 
         orders = []
 
         for product in cart_products:
-            print("product: ", product.total)
             order_dict = {
                 "user_id": product.user_id,
                 "product_id": product.product_id,

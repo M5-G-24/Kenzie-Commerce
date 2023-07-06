@@ -11,7 +11,7 @@ class Order(models.Model):
         "products.Product", on_delete=models.CASCADE, related_name="product_orders"
     )
     amount = models.IntegerField()
-    total = models.FloatField
+    total = models.FloatField()
     status = models.CharField(
         max_length=120,
         choices=[
