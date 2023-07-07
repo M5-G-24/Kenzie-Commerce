@@ -1,6 +1,6 @@
 from .serializers import CartProductSerializer, CartProductUpdateSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from .permissions import IsOwnerOnly
+from users.permissions import IsOwnerOnly
 from products.models import Product
 from rest_framework import generics
 from .models import CartProduct
