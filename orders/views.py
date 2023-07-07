@@ -1,17 +1,16 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 from .models import Order
 from .serializer import OrderSerializer
 from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from cart_products.models import CartProduct
-from rest_framework.views import Response, status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from .permissions import IsObjectOwner
+from cart_products.models import CartProduct
+from rest_framework.views import Request, Response, status
 
 
 class OrderListCreateView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
@@ -75,7 +74,7 @@ class OrderListCreateView(generics.ListCreateAPIView):
 
 class OrderDetailsView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
-    # permission_classes = [IsAdminUser]
+    permission_classes = [IsOwnerOnly]
 
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
