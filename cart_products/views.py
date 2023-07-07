@@ -1,11 +1,16 @@
+from .serializers import CartProductSerializer, CartProductUpdateSerializer
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from .permissions import IsOwnerOnly
+from products.models import Product
 from rest_framework import generics
 from .models import CartProduct
-from .serializers import CartProductSerializer, CartProductUpdateSerializer
-from products.models import Product
 from users.models import User
 
 
 class CartProductView(generics.ListCreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsOwnerOnly]
+
     serializer_class = CartProductSerializer
 
     def get_queryset(self):
@@ -26,6 +31,9 @@ class CartProductView(generics.ListCreateAPIView):
 
 
 class CartProductDetailView(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsOwnerOnly]
+
     serializer_class = CartProductUpdateSerializer
 
     def get_queryset(self):
