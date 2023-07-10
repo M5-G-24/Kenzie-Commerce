@@ -1,6 +1,12 @@
 from django.db import models
 
 
+class StatusChoices(models.TextChoices):
+    placed = "placed"
+    progress = "progress"
+    delivered = "delivered"
+
+
 class Order(models.Model):
     user = models.ForeignKey(
         "users.User",
@@ -14,10 +20,6 @@ class Order(models.Model):
     total = models.FloatField()
     status = models.CharField(
         max_length=120,
-        choices=[
-            ("PLACED", "placed"),
-            ("PROGRESS", "progress"),
-            ("DELIVERED", "delivered"),
-        ],
+        choices=StatusChoices.choices,
     )
     created_at = models.DateTimeField(auto_now_add=True)
