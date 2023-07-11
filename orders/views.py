@@ -8,9 +8,10 @@ from rest_framework.views import Response, status
 from users.permissions import IsOwnerOnly, IsProductOwner
 from django.core.mail import send_mail
 from django.conf import settings
+from rest_framework.permissions import IsAuthenticated
 
 
-def email_template(email_address:str,subject:str,message:str):
+def email_template(email_address: str, subject: str, message: str):
     return send_mail(
         subject=subject,
         message=message,
@@ -20,7 +21,7 @@ def email_template(email_address:str,subject:str,message:str):
     )
 
 
-class OrderListCreateView(generics.ListCreateAPIView):
+class OrderListUserCreateView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsOwnerOnly]
 
@@ -84,6 +85,19 @@ class OrderListCreateView(generics.ListCreateAPIView):
         return Response(data=serialized_data, status=status.HTTP_201_CREATED)
 
 
+class OrderListSellerView(generics.ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsProductOwner]
+
+    queryset = Order.objects.all()
+    serializer_class = OrderStatusSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        print("user: ", user)
+        return Order.objects.filter(product__user_id=user)
+
+
 class OrderDetailsView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsProductOwner]
@@ -91,7 +105,11 @@ class OrderDetailsView(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Order.objects.all()
     serializer_class = OrderStatusSerializer
-    
+
     def perform_update(self, serializer):
-        email_template(serializer.data["user"]["email"],"Order Status", f'Your order is right now:" "{serializer.data["status"]}')
+        email_template(
+            serializer.data["user"]["email"],
+            "Order Status",
+            f'Your order is right now:{serializer.data["status"]}',
+        )
         return serializer.validated_data
