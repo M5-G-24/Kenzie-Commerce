@@ -15,7 +15,6 @@ class UserSerializer(serializers.ModelSerializer):
             "is_staff",
         ]
         extra_kwargs = {
-            "is_staff": {"read_only": True},
             "username": {
                 "validators": [
                     UniqueValidator(
