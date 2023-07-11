@@ -92,7 +92,6 @@ class OrderDetailsView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderStatusSerializer
     
-
     def perform_update(self, serializer):
-        email_template(serializer.data["user"]["email"],"Order Status", f'Your order is right now:{serializer.data["status"]}')
+        email_template(serializer.data["user"]["email"],"Order Status", f'Your order is right now:" "{serializer.data["status"]}')
         return serializer.validated_data
