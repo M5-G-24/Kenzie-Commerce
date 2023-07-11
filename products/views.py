@@ -3,13 +3,14 @@ from rest_framework import generics
 from .models import Product
 from .serializers import ProductSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from users.permissions import IsOwnerOrReadOnly
+from users.permissions import IsStaffPermission
+
 
 class ProductListCreateView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsStaffPermission]
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -32,8 +33,8 @@ class ProductListCreateView(generics.ListCreateAPIView):
 
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsStaffPermission]
     lookup_url_kwarg = "pk"
-    
+
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
