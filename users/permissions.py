@@ -15,3 +15,9 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 class IsProductOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj.product.user == request.user
+
+
+class IsStaffPermission(permissions.BasePermission):
+    def has_permission(self, request, view):
+        user = request.user
+        return user.is_authenticated and user.is_staff
