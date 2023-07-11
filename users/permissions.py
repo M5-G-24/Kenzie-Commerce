@@ -19,5 +19,8 @@ class IsProductOwner(permissions.BasePermission):
 
 class IsStaffPermission(permissions.BasePermission):
     def has_permission(self, request, view):
-        user = request.user
-        return user.is_authenticated and user.is_staff
+        if request.method == "GET":
+            return request.user
+        elif request.method == "POST":
+            return request.user.is_authenticated and request.user.is_staff
+        return False
