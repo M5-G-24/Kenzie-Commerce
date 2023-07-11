@@ -32,5 +32,8 @@ class ProductListCreateView(generics.ListCreateAPIView):
 
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
+    permission_classes = [IsOwnerOrReadOnly]
+    lookup_url_kwarg = "pk"
+    
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
