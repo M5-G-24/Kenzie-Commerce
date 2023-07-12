@@ -14,12 +14,12 @@ class CartProductView(generics.ListCreateAPIView):
     serializer_class = CartProductSerializer
 
     def get_queryset(self):
-        user_id = self.kwargs["user_id"]
+        user_id = self.request.user.id
         return CartProduct.objects.filter(user_id=user_id)
 
     def perform_create(self, serializer):
         amount = self.request.data.get("amount")
-        user_id = self.kwargs["user_id"]
+        user_id = self.request.user.id
         user = User.objects.get(id=user_id)
 
         product_id = self.request.data.get("product")
@@ -37,7 +37,7 @@ class CartProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CartProductUpdateSerializer
 
     def get_queryset(self):
-        user_id = self.kwargs["user_id"]
+        user_id = self.request.user.id
         return CartProduct.objects.filter(user_id=user_id)
 
     def get_object(self):
